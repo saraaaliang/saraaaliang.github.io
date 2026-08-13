@@ -51,6 +51,9 @@ export interface RwdStorybookContent {
     focus: string;
     coverImage: string;
     coverAlt: string;
+    coverCaption: string;
+    coverLinkLabel: string;
+    coverLinkHref: string;
   };
   impact: {
     kicker: string;
@@ -139,6 +142,9 @@ export const rwdStorybookContent: RwdStorybookContent = {
     focus: "0-1數位體驗規劃 · 資訊架構彙整 · 視覺&互動效果設計",
     coverImage: cover,
     coverAlt: "封面照片 — RWD 數位繪本互動網站設計，筆電與手機裝置上的「太空小英雄飛飛」互動網站畫面",
+    coverCaption: "已上線之實際產品：",
+    coverLinkLabel: "lovekidstory.eden.org.tw",
+    coverLinkHref: "https://lovekidstory.eden.org.tw/",
   },
 
   impact: {

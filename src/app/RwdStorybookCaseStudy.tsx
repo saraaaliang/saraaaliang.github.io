@@ -161,6 +161,18 @@ export default function RwdStorybookCaseStudy({
         <div className="rounded-[20px] overflow-hidden flex items-center justify-center" style={{ backgroundColor: c.surface }}>
           <img src={content.hero.coverImage} alt={content.hero.coverAlt} className="w-full h-auto" />
         </div>
+        <figcaption className="mt-2.5 text-xs" style={{ color: c.muted }}>
+          {content.hero.coverCaption}
+          <a
+            href={content.hero.coverLinkHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:opacity-80 transition-opacity"
+            style={{ color: c.accent }}
+          >
+            {content.hero.coverLinkLabel}
+          </a>
+        </figcaption>
       </div>
 
       {/* Impact */}
