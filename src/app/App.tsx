@@ -25,7 +25,6 @@ export interface Project {
   role?: string;
   valueProposition?: string;
   coverImage: string;
-  coverAspect?: string;
   tags: string[];
   summary: string;
   comingSoon?: boolean;
@@ -67,7 +66,6 @@ const PROJECTS: Project[] = [
     role: syncAiContent.hero.role,
     valueProposition: syncAiContent.hero.description,
     coverImage: syncAiContent.hero.coverImage,
-    coverAspect: "2734 / 1510",
     tags: ["使用者研究", "0-1 功能發想", "AI 產品設計"],
     summary: syncAiContent.hero.description,
   },
@@ -442,8 +440,8 @@ function ProjectCard({
     >
       {/* Cover image / placeholder */}
       <div
-        className="relative overflow-hidden rounded-[20px] mb-5"
-        style={{ backgroundColor: "#f4f5f2", aspectRatio: project.coverAspect ?? "16 / 10" }}
+        className="relative overflow-hidden rounded-[20px] mb-5 aspect-[16/10]"
+        style={{ backgroundColor: "#f4f5f2" }}
       >
         {project.coverImage ? (
           <>

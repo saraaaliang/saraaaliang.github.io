@@ -304,13 +304,13 @@ export default function SyncAiCaseStudy({
 
       <div className="max-w-[1080px] mx-auto px-6 md:px-10 pb-24">
         <div
-          className="w-full aspect-[16/9] rounded-[20px] overflow-hidden"
+          className="w-full rounded-[20px] overflow-hidden"
           style={{ backgroundColor: "#ffffff", border: `1px solid ${c.border}` }}
         >
           <img
             src={content.hero.coverImage}
             alt={content.hero.coverAlt}
-            className="w-full h-full object-contain"
+            className="w-full h-auto block"
           />
         </div>
       </div>
