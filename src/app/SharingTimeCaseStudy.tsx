@@ -225,8 +225,61 @@ export default function SharingTimeCaseStudy({
         </div>
       </div>
 
+      {/* Digital Extension — dark band opener, "this is what shipped" before diving into the process story */}
+      <div style={{ backgroundColor: c.darkBg, padding: "96px 0" }}>
+        <div className="max-w-[1080px] mx-auto px-6 md:px-10" style={{ color: c.darkInk }}>
+          <Kicker onDark>{content.outcome.digitalExtension.kicker}</Kicker>
+          <p className="text-sm leading-[1.85] max-w-2xl mt-6 mb-9" style={{ color: c.darkBody }}>
+            <strong style={{ color: c.darkInk, fontWeight: 700 }}>{content.outcome.digitalExtension.title}：</strong>
+            <br />
+            {content.outcome.digitalExtension.paragraph}
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-9">
+            {content.outcome.digitalExtension.mobileScreens.map((screen, i) => (
+              <div key={i}>
+                <div
+                  className="w-full aspect-[3/4] rounded-2xl overflow-hidden flex items-center justify-center"
+                  style={{ backgroundColor: c.darkMobileBg }}
+                >
+                  {screen.src ? (
+                    <video
+                      src={screen.src}
+                      aria-label={screen.caption}
+                      className="w-full h-full object-contain"
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                    />
+                  ) : (
+                    <span className="text-xs px-2 text-center" style={{ color: c.darkCaption }}>
+                      GIF 待上傳
+                    </span>
+                  )}
+                </div>
+                <figcaption className="mt-2 text-xs text-center" style={{ color: c.darkCaption }}>
+                  {screen.caption}
+                </figcaption>
+              </div>
+            ))}
+          </div>
+
+          <a
+            href={content.outcome.digitalExtension.ctaHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-semibold px-6 py-3 rounded-full hover:opacity-80 transition-opacity"
+            style={{ backgroundColor: c.accentLight, color: c.accent }}
+          >
+            {content.outcome.digitalExtension.cta}
+            <ArrowRight size={14} />
+          </a>
+        </div>
+      </div>
+
       {/* Impact */}
-      <div className="max-w-[1080px] mx-auto px-6 md:px-10 pb-24">
+      <div className="max-w-[1080px] mx-auto px-6 md:px-10 py-24">
         <Kicker>{content.impact.kicker}</Kicker>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 mb-16">
           {content.impact.stats.map((stat, i) => (
@@ -511,56 +564,9 @@ export default function SharingTimeCaseStudy({
               </div>
             ))}
           </div>
-          <figcaption className="text-center text-xs mb-[72px]" style={{ color: c.darkCaption }}>
+          <figcaption className="text-center text-xs" style={{ color: c.darkCaption }}>
             {content.outcome.toolkitCaption}
           </figcaption>
-
-          <p className="text-sm leading-[1.85] max-w-2xl mb-9" style={{ color: c.darkBody }}>
-            <strong style={{ color: c.darkInk, fontWeight: 700 }}>{content.outcome.digitalExtension.title}：</strong>
-            <br />
-            {content.outcome.digitalExtension.paragraph}
-          </p>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mb-9">
-            {content.outcome.digitalExtension.mobileScreens.map((screen, i) => (
-              <div key={i}>
-                <div
-                  className="w-full aspect-[3/4] rounded-2xl overflow-hidden flex items-center justify-center"
-                  style={{ backgroundColor: c.darkMobileBg }}
-                >
-                  {screen.src ? (
-                    <video
-                      src={screen.src}
-                      aria-label={screen.caption}
-                      className="w-full h-full object-contain"
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
-                    />
-                  ) : (
-                    <span className="text-xs px-2 text-center" style={{ color: c.darkCaption }}>
-                      GIF 待上傳
-                    </span>
-                  )}
-                </div>
-                <figcaption className="mt-2 text-xs text-center" style={{ color: c.darkCaption }}>
-                  {screen.caption}
-                </figcaption>
-              </div>
-            ))}
-          </div>
-
-          <a
-            href={content.outcome.digitalExtension.ctaHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold px-6 py-3 rounded-full hover:opacity-80 transition-opacity"
-            style={{ backgroundColor: c.accentLight, color: c.accent }}
-          >
-            {content.outcome.digitalExtension.cta}
-            <ArrowRight size={14} />
-          </a>
         </div>
       </div>
 

@@ -141,11 +141,11 @@ export default function SdgEnergyCaseStudy({
       </section>
 
       <div className="max-w-[1080px] mx-auto px-6 md:px-10 pb-24 pt-6">
-        <div className="rounded-[20px] overflow-hidden" style={{ backgroundColor: c.surface }}>
+        <div className="w-full aspect-[16/9] rounded-[20px] overflow-hidden" style={{ backgroundColor: c.surface }}>
           <img
-            src={content.hero.coverImage}
-            alt={content.hero.coverAlt}
-            className="w-full h-auto"
+            src={content.hero.pagePhoto}
+            alt={content.hero.pagePhotoAlt}
+            className="w-full h-full object-cover"
           />
         </div>
         <figcaption className="mt-2.5 text-xs" style={{ color: c.muted }}>
@@ -328,25 +328,9 @@ export default function SdgEnergyCaseStudy({
       <div style={{ backgroundColor: c.darkBg, padding: "96px 0" }}>
         <div className="max-w-[1080px] mx-auto px-6 md:px-10" style={{ color: c.darkInk }}>
           <Kicker onDark>{content.outcome.kicker}</Kicker>
-          <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-start mt-6 mb-20">
-            <div className="flex-1 h-[300px] flex flex-col justify-center">
-              <p className="text-sm leading-[1.85]" style={{ color: c.darkBody }}>
-                {content.outcome.description}
-              </p>
-            </div>
-            <div className="flex-1 w-full">
-              <div className="rounded-[20px] overflow-hidden h-[300px]">
-                <img
-                  src={content.outcome.photo}
-                  alt={content.outcome.photoCaption}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <figcaption className="mt-2.5 text-xs" style={{ color: c.darkCaption }}>
-                {content.outcome.photoCaption}
-              </figcaption>
-            </div>
-          </div>
+          <p className="text-sm leading-[1.85] max-w-2xl mt-6 mb-20" style={{ color: c.darkBody }}>
+            {content.outcome.description}
+          </p>
 
           {/* Onboarding screens */}
           <div className="mb-7">

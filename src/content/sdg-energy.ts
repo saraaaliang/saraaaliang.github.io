@@ -35,6 +35,8 @@ export interface SdgEnergyContent {
     exhibition: string;
     coverImage: string;
     coverAlt: string;
+    pagePhoto: string;
+    pagePhotoAlt: string;
   };
   impact: {
     kicker: string;
@@ -72,8 +74,6 @@ export interface SdgEnergyContent {
   outcome: {
     kicker: string;
     description: string;
-    photo: string;
-    photoCaption: string;
     onboarding: {
       heading: string;
       points: Array<{ title: string; body: string }>;
@@ -112,6 +112,8 @@ export const sdgEnergyContent: SdgEnergyContent = {
       "展出於 2021 台灣永續行動週（Taiwan SDGs Action Days）· 國父紀念館及中山公園廣場 · 主辦：立法院聯合國永續發展目標策進會、國立國父紀念館 · 承辦：紙風車文教基金會",
     coverImage: cover,
     coverAlt: "封面照片 — SDGs 能源互動體驗設計，展場觸控裝置",
+    pagePhoto: usabilityTestPhoto,
+    pagePhotoAlt: "展覽現場實際操作 — 親子一同體驗互動裝置",
   },
 
   impact: {
@@ -217,8 +219,6 @@ export const sdgEnergyContent: SdgEnergyContent = {
     kicker: "Outcome",
     description:
       "在 3 週的時程與技術限制下，與工程師和 PM 共同產出落地新版本。迭代 3 版主要設計、進行 4 輪易用性測試（邀請內部跨部門夥伴測試，觀察操作是否順暢、有無困惑點，依據回饋持續調整）。",
-    photo: usabilityTestPhoto,
-    photoCaption: "展覽現場實際操作",
     onboarding: {
       heading: "遊戲前介紹畫面",
       points: [

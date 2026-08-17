@@ -113,6 +113,7 @@ export interface SharingTimeContent {
     toolkitImages: string[];
     toolkitCaption: string;
     digitalExtension: {
+      kicker: string;
       title: string;
       paragraph: string;
       mobileScreens: Array<{ caption: string; src?: string }>;
@@ -340,6 +341,7 @@ export const sharingTimeContent: SharingTimeContent = {
     toolkitCaption:
       "初步開發出的促進創意團隊交流的實體卡牌工具和 Miro 內的線上平台內容規劃，可和服務藍圖內流程相互對應",
     digitalExtension: {
+      kicker: "Digital Extension",
       title: "數位化延伸",
       paragraph:
         "今年(2026)，我為提升工具的可擴展性與使用彈性，將原本的實體卡牌工具與 Miro 共享平台的內容重新設計為「一站式的線上協作平台」，整合活動卡牌、工作坊引導內容、活動計時器及共享資訊線上空間，讓參與者能在不同地點共同完成活動、分享想法並保留討論成果。這項數位化設計讓工具不再受限於實體工作坊，可支援遠端、混合式團隊協作。",
