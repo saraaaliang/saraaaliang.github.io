@@ -122,12 +122,24 @@ function Nav({
   }, [page]);
 
   const handleNavLink = (sectionId: string) => {
-    if (page === "home") {
-      document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      onNavigate("home", sectionId);
-    }
+    const wasMenuOpen = menuOpen;
     setMenuOpen(false);
+
+    const doNavigate = () => {
+      if (page === "home") {
+        document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        onNavigate("home", sectionId);
+      }
+    };
+
+    // Wait for the mobile menu's collapse animation (duration: 0.2) to finish first —
+    // otherwise the collapsing height keeps reflowing the page mid-scroll and cancels it.
+    if (wasMenuOpen) {
+      setTimeout(doNavigate, 220);
+    } else {
+      doNavigate();
+    }
   };
 
   return (
@@ -233,6 +245,13 @@ function HeroSection({
             Available for new projects
           </div>
 
+          <div
+            className="text-sm font-semibold tracking-wide"
+            style={{ color: "#0f3d2b" }}
+          >
+            AI-First 使用者體驗 / 服務設計師
+          </div>
+
           <h1
             className="text-[clamp(2rem,5vw,3.5rem)] font-semibold text-foreground leading-[1.2] tracking-tight"
             style={{ fontFamily: "var(--font-epilogue)" }}
@@ -248,7 +267,7 @@ function HeroSection({
             <span style={{ color: "#d8dbd5" }}>｜</span>
             <span>2年使用者研究 &amp; 服務設計</span>
             <span style={{ color: "#d8dbd5" }}>｜</span>
-            <span>20+ 數位體驗</span>
+            <span>英國政府大樓公開展出</span>
           </div>
 
           <p
@@ -297,13 +316,13 @@ function HeroSection({
 function AboutSection() {
   const stats = [
     { value: "7+", label: "設計顧問公司經驗" },
-    { value: "20+", label: "已完成的數位體驗專案" },
+    { value: "20+", label: "商業客戶簽約合作或公開展出專案" },
   ];
 
   const skills = [
     "UX 研究",
     "服務設計",
-    "互動設計",
+    "UIUX設計",
     "可用性測試",
     "設計策略",
     "資訊架構",
@@ -396,7 +415,7 @@ function AboutSection() {
                 Tools
               </div>
               <div className="flex flex-wrap gap-2">
-                {["Figma", "Miro", "Notion", "Photoshop", "Illustrator", "After Effect", "AI Tools"].map(
+                {["Figma", "Miro", "Notion", "Photoshop", "Illustrator", "After Effect", "Claude Code", "Lovable", "Github"].map(
                   (tool) => (
                     <span
                       key={tool}
