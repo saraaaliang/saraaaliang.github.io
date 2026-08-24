@@ -265,7 +265,7 @@ function HeroSection({
           >
             <span>7年設計顧問公司經驗</span>
             <span style={{ color: "#d8dbd5" }}>｜</span>
-            <span>2年使用者研究 &amp; 服務設計</span>
+            <span>3年使用者研究 &amp; 服務設計</span>
             <span style={{ color: "#d8dbd5" }}>｜</span>
             <span>英國政府大樓公開展出</span>
           </div>

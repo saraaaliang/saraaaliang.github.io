@@ -140,7 +140,7 @@ export const sharingTimeContent: SharingTimeContent = {
     kicker: "Case Study",
     title: "企業服務：內部分享服務設計",
     description:
-      "以用戶及組織真實反饋設計，促進團隊效率、溝通模式與工作滿意度。成功被合作企業採納，且達 80% 使用者好評。",
+      "以用戶及組織真實反饋設計，促進團隊效率、溝通模式與工作滿意度。成功被合作企業採納，獲參與者全員正向評價。",
     role: "服務設計師 · UIUX設計師",
     focus: "從研究至功能產生 · 使用者研究 · 服務設計 · AI工具建立",
     coverImage: cover,
@@ -152,9 +152,9 @@ export const sharingTimeContent: SharingTimeContent = {
     stats: [
       {
         icon: "check",
-        title: "80% 正向評價",
+        title: "參與者全員正向評價",
         description:
-          "工作坊問卷回饋達八成正向評價，參與者表示願意有更多類似交流機會。",
+          "問卷回饋全員評分皆達4分以上，滿分5分，參與者表示願意有更多類似機會點。",
       },
       {
         icon: "target",
