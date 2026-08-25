@@ -152,7 +152,7 @@ export const sharingTimeContent: SharingTimeContent = {
     stats: [
       {
         icon: "check",
-        title: "參與者全員正向評價",
+        title: "工作坊參與者平均滿意度達89%",
         description:
           "問卷回饋全員評分皆達4分以上，滿分5分，參與者表示願意有更多類似機會點。",
       },
