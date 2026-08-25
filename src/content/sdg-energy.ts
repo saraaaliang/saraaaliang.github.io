@@ -127,7 +127,7 @@ export const sdgEnergyContent: SdgEnergyContent = {
       {
         icon: "check",
         title: "超過90%觀眾完成體驗",
-        description: "展覽期間現場觀察與工作人員回饋顯示，使用者中途放棄的狀況大幅減少。",
+        description: "展覽期間透過工程團隊回饋的後台資料及現場觀察顯示，與舊版相比，使用者中途放棄的狀況大幅減少。",
       },
       {
         icon: "people",
