@@ -220,7 +220,7 @@ export const sharingTimeContent: SharingTimeContent = {
       findings: [
         {
           icon: "check",
-          text: "工作坊達到 80% 正向回饋，多數參與者表示喜歡這樣的交流形式、也希望能有更多類似機會。",
+          text: "工作坊達到 89% 正向回饋，多數參與者表示喜歡這樣的交流形式、也希望能有更多類似機會。",
         },
         { icon: "arrow", text: "實體互動成為「延伸成正式解決方案」的關鍵依據。" },
       ],
