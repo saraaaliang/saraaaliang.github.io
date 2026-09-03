@@ -274,7 +274,7 @@ function HeroSection({
             className="text-base md:text-lg leading-relaxed max-w-xl"
             style={{ color: "#40474a" }}
           >
-            我是一位使用者體驗/服務設計師，擅長將複雜資訊、服務流程與使用者需求，轉化為清楚、可參與且能落地的數位與互動體驗。
+            我是一位使用者體驗/服務設計師，擅長把抽象的服務流程與使用者需求，轉化為兼具設計一致性與可落地性的數位體驗。
           </p>
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -346,12 +346,20 @@ function AboutSection() {
             >
               About
             </span>
-            <p
-              className="text-xl md:text-[1.3125rem] font-medium leading-[1.65] max-w-[32ch]"
-              style={{ fontFamily: "var(--font-inter)", color: "#15181a" }}
-            >
-              我的作品領域包括企業服務、教育、公益，與AI工具。透過使用者研究、流程重整與跨部門協作，讓設計成果能真正被使用與落地。
-            </p>
+            <div className="space-y-5 max-w-[42ch]">
+              <p
+                className="text-base md:text-lg leading-relaxed"
+                style={{ fontFamily: "var(--font-inter)", color: "#40474a" }}
+              >
+                從廣告業的美術創意背景，到設計顧問公司的策展企劃與數位體驗設計。我逐漸發現，若只有畫面的精緻，無法實際探究使用者的困難，會是非常可惜的一件事。這讓我開始學習以服務設計系統化思考看待設計流程，並更以使用者為核心進行研究與設計。
+              </p>
+              <p
+                className="text-base md:text-lg leading-relaxed"
+                style={{ fontFamily: "var(--font-inter)", color: "#40474a" }}
+              >
+                以可被驗證的設計決策為目標，整合多方關係人的立場，轉譯成一個能真正解決問題的體驗。同時利用AI工具，加快迭代過程，與團隊將注意力更多地花在「什麼是一個好的產品」上。
+              </p>
+            </div>
           </motion.div>
 
           <div className="space-y-4">
