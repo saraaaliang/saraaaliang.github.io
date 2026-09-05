@@ -11,6 +11,8 @@ import { rwdStorybookContent } from "../content/rwd-storybook";
 import RwdStorybookCaseStudy from "./RwdStorybookCaseStudy";
 import { syncAiContent } from "../content/sync-ai";
 import SyncAiCaseStudy from "./SyncAiCaseStudy";
+import SyncAiPrototype from "./sync-ai-prototype/SyncAiPrototype";
+import SyncAiClientPage from "./sync-ai-prototype/SyncAiClientPage";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -809,7 +811,14 @@ function ProjectPage({
 // ── App ───────────────────────────────────────────────────────────────────────
 
 export default function App() {
-  const [page, setPage] = useState<PageId>("home");
+  // 尚未公開的頁面：只能透過網址 hash 進入（例如 #sync-ai-prototype），
+  // 不會出現在任何可點擊的連結上，做完之前不想讓一般訪客看到。
+  // sync-ai-prototype／sync-ai-review 是兩個各自獨立的隱藏頁面（設計師端／
+  // 客戶端），不是同一頁裡切換視角——現實中這兩邊本來就是不同系統。
+  const [page, setPage] = useState<PageId>(() => {
+    const hash = window.location.hash.replace("#", "");
+    return hash === "sync-ai-prototype" || hash === "sync-ai-review" ? hash : "home";
+  });
   const pendingScrollRef = useRef<string | null>(null);
 
   const navigate = (newPage: PageId, scrollTo?: string) => {
@@ -842,6 +851,10 @@ export default function App() {
         >
           {page === "home" ? (
             <HomePage onNavigate={navigate} />
+          ) : page === "sync-ai-prototype" ? (
+            <SyncAiPrototype onNavigate={navigate} />
+          ) : page === "sync-ai-review" ? (
+            <SyncAiClientPage onNavigate={navigate} />
           ) : (
             <ProjectPage projectId={page} onNavigate={navigate} />
           )}
