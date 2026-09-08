@@ -74,6 +74,15 @@ export interface SyncAiContent {
     flowImageCaption: string;
     features: Array<{ heading: string; insight: string }>;
   };
+  prototypeShowcase: {
+    kicker: string;
+    intro: string;
+    userFlowUrl: string;
+    wireframeUrl: string;
+    designerVideoCaption: string;
+    clientVideoCaption: string;
+    ctaLabel: string;
+  };
   solution: {
     kicker: string;
     before: string;
@@ -236,6 +245,17 @@ export const syncAiContent: SyncAiContent = {
         insight: "接案設計師如何更專業、有策略地從「執行設計」轉向「設計整個合作方式」。",
       },
     ],
+  },
+
+  prototypeShowcase: {
+    kicker: "Prototype",
+    intro:
+      "5 天衝刺結束後，User Flow 與 Wireframe 都持續更新到更精確的版本，也做出了一版可以實際操作的互動原型。",
+    userFlowUrl: "https://claude.ai/code/artifact/16a6f4c1-9e36-45c7-8014-fdae293936ed",
+    wireframeUrl: "https://claude.ai/code/artifact/1e16b7f3-23a2-4b47-af14-55380cbb024c",
+    designerVideoCaption: "設計師端（桌機）操作示範，影片素材製作中。",
+    clientVideoCaption: "客戶端（手機）審查示範，影片素材製作中。",
+    ctaLabel: "直接體驗完整原型",
   },
 
   solution: {

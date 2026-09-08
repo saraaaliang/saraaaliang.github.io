@@ -46,6 +46,12 @@ export default function SyncAiPrototype({
         </div>
       </div>
 
+      <div className="max-w-[1080px] mx-auto px-6 md:px-10 pb-6">
+        <p className="text-[13px] leading-[1.7] max-w-2xl" style={{ color: c.muted }}>
+          這是 Sync AI 設計師端的獨立示範，實際產品中會是 Figma 外掛，與客戶端（另一個獨立頁面）僅透過共用資料非即時同步。
+        </p>
+      </div>
+
       <div className="max-w-[1080px] mx-auto px-6 md:px-10 pb-28">
         <AnimatePresence mode="wait" initial={false}>
           <motion.div

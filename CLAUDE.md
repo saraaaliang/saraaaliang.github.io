@@ -135,44 +135,67 @@ npm run optimize-images:watch  # 監看模式，丟新圖進資料夾會自動�
 
 一個獨立於作品集主站的**互動原型**，不是案例頁的一部分，做完之前刻意不放出任何可點擊的連結。
 
-- **入口**：`src/app/App.tsx` 裡的隱藏 hash 路由，只能透過網址 `#sync-ai-prototype` 進入（真的重新整理頁面才會生效，不是單純換 state）。
-- **程式碼位置**：`src/app/sync-ai-prototype/`
-  - `state.ts` — `Decision` 物件（唯一資料來源）、`FlowState`、`prototypeReducer`。**重寫時要注意**：現在示範資料是 2 個 Decision（整體頁面設計、CTA 視覺層級），原本 `PrototypeState.decision: Decision` 這種單一物件的寫法撐不住，要改成 `decisions: Decision[]`（或用 id 索引的物件），並且要有一個「目前正在看第幾項」的游標狀態，給 D6、C3a/C3b 這類逐項審核畫面用（2026-08-28 因為擴大到 2 項而新增的架構要求，之前只有 1 項時沒這個問題）。
-  - `ui.tsx` — 色票 `c`、`StatusBadge`、`LoadingChecklist`（共用元件，靠 props 決定畫面）
-  - `DesignerConsole.tsx` — 設計師端 D1–D11
-  - `ClientReview.tsx` — 客戶端 C1–C7（含 C3a／C3b，逐項查看畫面）
-  - `SyncAiPrototype.tsx` — 入口，掛 `useReducer`，決定顯示哪個 surface
-- **已完成並驗證（2026-09-04，經過兩輪跟 wireframe 逐畫面重新比對後的修正）**：設計師端 D1–D7 + S4/S5/S5b（彈窗）+ D8/D8b；客戶端 C1–C5（含 C3a/C3b 逐項、C4 補充建議）。已在瀏覽器裡實際跑過兩條分支並截圖確認：(a) C3a/C3b 都按「確認設計」→ 全部確認後自動跳 C5「已確認並回傳設計師」→ D8「已確認」雙勾；(b) C3b 改點「補充建議」送出、不確認 → C3b 停在原地（不會自動跳走，因為沒有全部確認）→ 用畫面最上方（phone/desktop frame 外面）的「查看設計師端」切換鈕直接跳去看 D8b「回饋與建議」，CTA 那行顯示建議內容。D8 或 D8b 完全由 `decisions` 的實際 `status` 決定，任何項目都可以走任一分支。「查看設計師端」是本原型單人扮演雙角色用的手動切換鈕（`DESIGNER_CHECK_RESOLUTION`），2026-09-04 第二輪比對後從 C5 卡片內部移到 SyncAiPrototype 最上層導覽列（`state.surface === "client"` 時顯示），因為 wireframe 明確要求 C5 卡片本身不能有這種功能。S1-S3（AI 不確定性彈窗）還沒做。
-  - **2026-09-04 第一輪修正**：(1) D6 原本用單一個 `ADVANCE_REVIEW` action 同時做「確認當前項＋前進到下一項」，不能回頭看已經切過的項目；改成新增 `SET_REVIEW_CURSOR` action，讓標題旁的「‹ N / M ›」變成真的可以左右自由切換的按鈕（跟確認狀態完全無關），「已確認說明 →」的 disabled 條件也從只看目前這項改成 `selected.every(d => d.reviewed)`。(2) S5 原本直接把 S5b 的「連結已產生」內容當成整個 `link_ready` 畫面；改成 `link_ready`（S5，「預覽接收端頁面」＋「複製連結」）跟 `link_copied`（S5b，「連結已產生」＋「已複製」，2026-09-05 使用者要求拿掉按鈕文字後面的 ✓，前面的 icon 維持）兩個獨立 flow，新增 `FINISH_SHARE` action 讓 S5b 關閉彈窗回到 D7。
-  - **2026-09-04 第二輪修正（wireframe 又改了 C3a/C3b/C4/C5）**：C3a/C3b 標題列改成 `DetailHeader`（‹›各自貼邊、標題下方縮小淡化的「N/M」，到頭尾會 disabled），「發生了什麼變化」底下的灰階示意圖改成 `MiniPagePreview`（迷你瀏覽器列＋版面線條＋深灰 CTA 色塊，C3b 的 CTA 刻意比 C3a 大且有邊框，對應「CTA 視覺層級」這個決策），按鈕改名「補充建議」／「確認設計」且等寬（原本 flex 1:2 改成 1:1）。連帶把 C3a/C3b 的確認邏輯也改成跟 D6 一致：`CLIENT_CONFIRM_CURRENT` 不再自動前進到下一項（改用新的 `SET_CLIENT_CURSOR` 自由切換，取代原本身兼「前進／略過完成」雙重角色的 `CLIENT_NEXT_DETAIL`，已移除），全部項目都確認才會自動轉場到 C5——這代表 C5 現在**只有**全部確認的分支會到達，「只留言不確認」的示範路徑不再經過 C5，直接用上面說的「查看設計師端」切換鈕跳去看 D8b。C4 的 id/catalog 名稱從「留言」改成「補充建議」（畫面上的 header 文字本來就是「留下建議」，沒變）。C5 文案改成大標「已確認並回傳設計師」→小標「無需進一步操作，有變更會再通知您」→細項「整體頁面設計、CTA 視覺層級・剛剛」，拿掉「查看設計師端結果」按鈕（見上一條）。
-  - **2026-09-05 使用者要求的行為調整（不是 wireframe 規格，是使用者明確拍板要的）**：D6「確認」跟 C3a/C3b「確認設計」都改成確認後自動前進到下一項（不是最後一項時），`CONFIRM_EXPLANATION`／`CLIENT_CONFIRM_CURRENT` 各自在標記完成後順便把 `reviewCursor`／`clientCursor` +1。「‹ ›」還是能自由手動切換回去看已確認過的項目，只是「確認」多了一個「順便前進」的副作用，不是像原本那樣完全脫鉤。這跟第二輪修正時刻意讓「確認」與「‹ ›」導覽脫鉤的邏輯有點矛盾（前後兩次修正的取捨不同），但使用者在看過兩者的技術複雜度落差（低）跟取捨說明後選了現在這版，之後如果要重新脫鉤要記得回頭改這兩個 reducer case。
-  - **2026-09-05 S5b「已複製」按鈕拆分（使用者反饋原本設計奇怪）**：原本「已複製 ✓」同一顆按鈕兼職「狀態顯示」跟「關閉彈窗的動作」，使用者反饋「都已經複製了為什麼還要再按一次」。改成狀態（純文字「✓ 已複製到剪貼簿」，不能點）跟動作（獨立的「完成 →」按鈕，dispatch `FINISH_SHARE`）分開，兩者不再共用同一個元素。這是在三個選項（自動關閉／拆開狀態與動作／按鈕文字改成「完成」但維持同一顆）裡，使用者選了「拆開」這個方向。
-  - **2026-09-05 S5「預覽接收端頁面」做成真的可以用（同日重做過一次，第一版方向錯了）**：第一版做法是切換 `surface` 到 `"client"`、重用真正的 `ClientReview` 元件當預覽，結果使用者指出兩個問題：(1) 切 surface 會讓整個 `DesignerConsole` 桌機外框被換掉，畫面看起來像跳出了原本的視窗，但預覽這件事應該還是「在桌機視窗裡」發生的；(2) 預覽的目的只是讓設計師確認圖跟文字有沒有清楚標示，不需要真的能點「留言」「確認設計」這些互動。因此整個重做：拿掉 `previewSnapshot`／`ENTER_PREVIEW`／`EXIT_PREVIEW`（這套「暫存再還原」機制是為了怕預覽時誤觸互動才設計的，既然預覽不可互動，安全網也用不到了），改成 `DesignerConsole.tsx` 內部的本地 `useState`（`previewOpen`），S5「預覽接收端頁面」按鈕改成 `setPreviewOpen(true)`，疊出一個唯讀的 `PreviewSheet`：跟 S4/S5 一樣蓋在同一個桌機容器裡（`DesignerConsole` 全程不卸載、外框一直都在），但尺寸做得比小彈窗大很多、內容一頁式由上往下捲動——先是 C2 那張整體版面配置縮圖（數字標記），接著兩個決策各自的示意圖＋「發生了什麼變化／為什麼／背景脈絡」文字，一路排下去，沒有任何按鈕互動，純粹用來核對內容。共用的 `MiniPagePreview`（C3a/C3b 那個迷你瀏覽器列＋CTA 色塊示意圖）從 `ClientReview.tsx` 搬到 `ui.tsx`，讓 `DesignerConsole.tsx` 也能 import 使用，不是複製一份。
-- **術語規則：全產品不能出現「核准」這個詞，一律用「確認」**（2026-08-27 使用者明確要求）。影響範圍包含未來要寫的程式碼：`DecisionStatus` 的 `"approved"` 這個 enum 值可以維持英文（使用者看不到），但任何會被畫面顯示出來的文字、變數如果之後要顯示中文標籤，一律用「確認」不要用「核准」；`approvedBy`/`approvedAt` 這兩個欄位名稱目前還沒被任何畫面用到，可以考慮改名成 `confirmedBy`/`confirmedAt` 保持一致，写程式碼時再一併處理。
-- **核心原則，重構時不要合併**：`flow`（導覽用，決定畫面）跟 `decision.status`（確認狀態，決定 StatusBadge 顏色文字）是兩條獨立軸線，故意不合成一個狀態機，因為同一個 `decision.status` 要被 8 個以上畫面共用。
-- **外部參考文件（唯一可信來源，不在 repo 裡，是 Claude Artifact，開始寫 D1-D11 之前一定要重新讀一次，內容比這份 CLAUDE.md 新）**：
-  - Wireframe（21 個畫面全灰階，正式規格尺寸 390×844 / 1440×900）：`https://claude.ai/code/artifact/1e16b7f3-23a2-4b47-af14-55380cbb024c`
-  - 需求分析／架構圖／產品邊界（FR 編號 FR1-FR13）：`https://claude.ai/code/artifact/a2e803f6-04e0-4e88-812b-8355859132a1`
-- **設計師端完整流程是 D1-D11，2026-08-28 確認的最新順序**（跟程式碼現況不一樣，見上面「已完成」那條）：
-  1. D1 掃描中：只確認「有東西」，不揭露內容
-  2. D2 交付設定：唯一選擇動作是挑模式卡片（視覺溝通／開發交付），不是「交付對象」＋「模式」兩排獨立 pill
-  3. D3 偵測結果列表：掃描不是只找到 1 個項目，是列出所有候選重點（示範資料 4 項，勾 2 項：整體頁面設計、CTA 視覺層級）
-  4. D4 確認生成清單：設計師可以新增／移除／確認要生成說明的項目，示範資料鎖定最終 2 項（2026-08-28 從 1 項擴大到 2 項，驗證清單／逐項審核殼子撐得住多項目，不是只做給單一決策看的假殼子）
-  5. D5 AI 轉譯中：designerRationale → clientExplanation
-  6. D6 審核與微調：文字框跟「編輯」「確認」兩個按鈕做成同一個元件，不是分開飄浮的兩塊；逐項確認，每項確認完留一行進度紀錄（例如「整體頁面設計・已確認說明」）；全部項目確認完後按「已確認說明 →」，不是直接送出，而是彈出 S4／S5（見下一條）
-  7. S4／S5（彈窗，不佔 D 編號）：S4 是「是否開啟接收方設計確認功能」[是]／[否] 選擇（2026-08-28 從 D6 內嵌卡片抽出來變成獨立彈窗），S5 是「連結已產生」，主要動作是複製連結，LINE／Slack／Email 是展示用分享管道
-  8. D7 Review Ready：卡片顯示「2 個設計決策」，帶「未閱覽」標籤，是跟 D8 對照的 Before 狀態
-  9. D8／D8b：客戶回覆後的分支（見下一條）
-  10. D9 模擬變更、D10 變更偵測、D11 重新確認完成：核心的版本重新確認迴圈
-- **D7/D8 是刻意設計的 Before/After 對照（2026-08-27 使用者要求）**：D7 顯示「未閱覽」，D8 是分支：客戶兩項都按確認 → 「設計已確認」（接續 D9-D11 迴圈）；客戶只留言沒確認 → 「設計需調整」（wireframe 裡的 D8b，走回 D1 重新掃描，不進入 D9-D11 迴圈）。
-- **示範資料是 2 個決策，不是 1 個（2026-08-28 使用者要求擴大）**：整體頁面設計、CTA 視覺層級。C3 拆成 C3a（整體頁面設計，1/2）／C3b（CTA 視覺層級，2/2），C2 整頁 mockup 上有 2 個數字標記對應這兩項。但 D9-D11／C6-C7 的重新確認迴圈刻意只針對 CTA 這一項示範版本變更，不是兩項都要重新確認一次，理由：這個迴圈的敘事本來就是「其中一項後來被改動」，不需要每個決策都各自跑一次相同的迴圈才能證明機制成立。
-- **下一步優先順序（2026-09-04 修正）**：
-  1. **D9→D10→D10b→C6→C7→D11**（模擬版本變更 → 變更偵測／已生成差異說明 → 設計師確認差異說明 → 通知客戶重新審查 → 客戶再次確認 → 設計師看到重新確認完成）。reducer 裡對應的 action（`SIMULATE_CHANGE`／`REDETECT`／`EDIT_DIFF_NOTE`／`CONFIRM_DIFF_NOTE`／`NOTIFY_CLIENT_REPROMPT`／`CLIENT_OPEN_REPROMPT_DETAIL`／`CLIENT_RECONFIRM`／`DESIGNER_SEE_RECONFIRMED`）跟 flow 值都已經在 `state.ts` 裡定義好了，只差畫面。示範資料刻意只針對 CTA 這一項模擬變更（見下面「示範資料」那條），不用兩項都跑一次。D8/D8b 畫面目前是乾淨的終點（沒有「下一步」按鈕），接這段時要在 D8/D8b 補一個觸發 `SIMULATE_CHANGE` 的按鈕或入口。
-  2. S1-S3（AI 不確定性彈窗，掛在 D5 底下）、視覺打磨排在最後，就算沒做完也不影響上面那步的核心論點。
-- **顏色系統**：目前 wireframe 是灰階，之後要從使用者提供的 Figma 參考截圖（`3x3GJs4NpYvHVh9qAey2GD` 檔案，node 1:13／1:220／1:405／1:621）延伸出色票，不能直接套用作品集現有的深綠 Version C 色票。
+### 2026-09-05 架構大改：拆成兩個各自獨立的網頁（設計師端／客戶端）
+
+**這是目前最重要的架構決定，之後接手務必先讀這段。** 原本整個原型是「一個 session、一份共用 state、用 `surface` 欄位切換視角」，裡面有好幾顆「開啟接收端審查畫面」「查看設計師端」這種按鈕讓單人示範可以切來切去。使用者指出這不對：**真實產品裡設計師端（Figma 外掛）跟客戶端（任何瀏覽器都能打開的純網頁，不用下載 App）是兩個完全獨立的系統，中間沒有任何一邊能「打開」另一邊的畫面**，兩邊只靠共用的後端資料連動——客戶確認或留言，資料會進後端；設計師重新整理才會看到最新狀態，不是即時推播。舊架構那些切換按鈕全部拿掉，改成下面這個模型：
+
+- **兩個完全獨立的隱藏路由**（`src/app/App.tsx`）：
+  - `#sync-ai-prototype` → `SyncAiPrototype.tsx`（設計師端入口，only render `DesignerConsole`）
+  - `#sync-ai-review` → `SyncAiClientPage.tsx`（客戶端入口，only render `ClientReview`）
+  - 兩個入口各自 `useReducer`，完全不共用 React state，也沒有任何「切到對方視角」的按鈕或 UI。
+- **共用資料靠 localStorage 模擬後端**（`decisionModel.ts`）：`loadSharedDecisions()`／`saveSharedDecisions()`／`resetSharedDecisions()`，key 是 `sync-ai-prototype:shared-decisions`。這是唯一連接兩個系統的地方，刻意做成「讀寫一份資料」而不是「兩份各自寫死的假資料」，因為使用者明確要求「背後資料是連動的」。
+- **設計師端只在「送出」那一刻寫入共用資料**：D1-D6 全部是本機草稿，客戶端看不到；`COPY_LINK`（S5「複製連結」）那一刻才 `saveSharedDecisions(state.decisions)`，這之後客戶端才讀得到內容。送出之後設計師端不會再主動寫入，只能用 D7/D8/D8b 畫面上的「重新整理狀態」（`REFRESH_STATUS` action）重新讀一次，藉此知道客戶端做了什麼——這顆按鈕取代了原本「開啟接收端審查畫面」，語意上誠實很多（「去後端查最新狀態」而不是「打開對方的畫面」）。
+- **客戶端每次確認／送出建議都立刻寫回共用資料**（`clientState.ts` 的 `CLIENT_CONFIRM_CURRENT`／`CLIENT_SUBMIT_COMMENT` 內都呼叫 `saveSharedDecisions`），因為客戶端動作對應到「打 API 更新後端」，是即時的；不對稱地，設計師端要「重新整理」才看得到，這個不對稱是刻意的，符合現實中沒有 websocket 即時通知的情境。
+- **D7/D8/D8b 合併成同一個 flow 值 `review_status`**（原本是分開的 `review_pending`／`designer_resolved`），畫面上顯示哪一種完全看 `decisions` 目前的實際狀態算出來（`anyResponded`／`allResolved`），不是靠切換 flow 值——這樣「重新整理狀態」單純只是重新抓資料，畫面自然跟著資料變，不需要額外的狀態機分支。
+- **RESET 的範圍不對稱**：設計師端「重新開始」會連 `resetSharedDecisions()` 一起重置（回到最初始的 2 個 not_confirmed 決策），因為重新開始示範代表要讓客戶端也回到起點；客戶端「重新開始」只重置自己的畫面導覽位置（回到 C1），**不會**動共用資料，因為現實中客戶沒有權限重置設計師那邊的東西。
+- **測試方式**：兩個路由各自開一個分頁（`#sync-ai-prototype` 一個、`#sync-ai-review` 一個），在其中一邊操作、另一邊重新整理／按「重新整理狀態」，確認資料真的同步——已經這樣測過一輪：客戶端兩項都確認 → 設計師端按「重新整理狀態」→ 正確顯示 D8「已確認」雙勾；設計師端「重新開始」→ 客戶端重新整理 → 正確變回 `not_confirmed`。
+- **D9-D11／C6-C7 尚未實作，而且需要重新設計，不是直接照舊的 reducer 邏輯接上去**：舊版 `state.ts` 曾經寫過 `SIMULATE_CHANGE`／`REDETECT`／`NOTIFY_CLIENT_REPROMPT`／`CLIENT_RECONFIRM` 這些 action，但都是建立在「單一共用 state、靠 surface 切換」的舊架構上，這次重構時已經整個拿掉，**不在** `designerState.ts`／`clientState.ts` 裡。之後要做這段時，`NOTIFY_CLIENT_REPROMPT` 這類「設計師端動作、影響客戶端看到的東西」的 action，要照現在的模式設計成「設計師端寫入共用資料」，客戶端要靠自己重新整理頁面才看得到（不是靠 action 直接把兩邊狀態一起改掉），跟 D7/D8 現在的「送出／重新整理」模式一致。
+
+### 程式碼位置（`src/app/sync-ai-prototype/`，2026-09-05 更新）
+
+- `decisionModel.ts` — `Decision`／`DecisionStatus`／`ClientExplanation` 型別、`initialDecisions` 示範資料、localStorage 共用資料讀寫函式。兩邊入口都從這裡 import。
+- `designerState.ts` — 設計師端專用：`DesignerFlow`／`DesignerState`／`designerReducer`，只管 D1-D8b + S1-S5b 的本機導覽跟草稿編輯。
+- `clientState.ts` — 客戶端專用：`ClientFlow`／`ClientState`／`clientReducer`，只管 C1-C5 的本機導覽。
+- `ui.tsx` — 色票 `c`、`StatusBadge`、`LoadingChecklist`、`CheckRow`、`EditConfirmBox`、`MiniPagePreview`（C3a/C3b 跟 S5 預覽面板共用的迷你畫面示意圖，2026-09-05 從 `ClientReview.tsx` 搬過來，兩邊都要用）。
+- `DesignerConsole.tsx` — 設計師端畫面 D1–D8b + S1-S5b，吃 `DesignerState`／`Dispatch<DesignerAction>`。
+- `ClientReview.tsx` — 客戶端畫面 C1–C5，吃 `ClientState`／`Dispatch<ClientAction>`。
+- `SyncAiPrototype.tsx` — 設計師端入口（`#sync-ai-prototype`），掛 `designerReducer`，沒有任何跨系統切換 UI。
+- `SyncAiClientPage.tsx` — 客戶端入口（`#sync-ai-review`），掛 `clientReducer`，沒有任何跨系統切換 UI。
+- ~~`state.ts`~~ — 2026-09-05 已刪除，內容拆成上面三個檔案。
+
+### 畫面內容本身的規格歷史（跟這次架構重構無關，是 wireframe 內容迭代的記錄）
+
+- **已完成並驗證**：設計師端 D1–D7 + S4/S5/S5b（彈窗）+ D8/D8b（現在合併成 `review_status` 一個 flow，見上面架構說明）；客戶端 C1–C5（含 C3a/C3b 逐項、C4 補充建議）。D8 或 D8b 顯示哪一種完全由 `decisions` 的實際 `status` 決定，任何項目都可以走任一分支。S1-S3（AI 不確定性彈窗）還沒做。
+- **D6／C3a-C3b 的「‹ N/M ›」自由切換 + 確認自動前進**：標題旁／正下方的頁碼可以自由左右切換，跟確認狀態無關；「確認」動作額外會自動前進到下一項（不是最後一項時），這是使用者 2026-09-05 明確要求的行為（跟「導覽完全脫鉤」的原始設計有點矛盾，但使用者看過取捨後選了這版）。D6「已確認說明 →」要 `selected.every(d => d.reviewed)` 才會亮起。
+- **S4／S5／S5b**：S4 是非/是選項置中的「是否開啟接收方設計確認功能」；S5「分享審查連結」有「預覽接收端頁面」＋「複製連結」兩個按鈕；S5b「連結已產生」，狀態文字「✓ 已複製到剪貼簿」（不能點）跟動作按鈕「完成」是分開的兩個元素，不要合併回同一顆按鈕（使用者明確反饋過這樣會讓人搞不清楚幹嘛要點兩次）。
+- **S5「預覽接收端頁面」**：疊在桌機視窗裡的唯讀面板（`DesignerConsole.tsx` 內部 `previewOpen` 這個本地 `useState`，跟共用的 reducer 完全無關），`DesignerConsole` 桌機外框全程不卸載；內容一頁式由上往下捲動，沒有任何按鈕互動，純粹讓設計師核對圖跟文字有沒有清楚標示。
+- **C3a/C3b**：標題列用 `DetailHeader`（‹›各自貼邊，到頭尾會 disabled；標題正下方縮小淡化的「N/M」）；「發生了什麼變化」底下用 `MiniPagePreview`（迷你瀏覽器列＋版面線條＋深灰 CTA 色塊，CTA 視覺層級那項的色塊刻意比另一項大且有邊框）；底部按鈕「補充建議」／「確認設計」等寬。C5 只有全部確認的分支會到達（只留言不確認的示範路徑不會經過 C5，見架構說明的「重新整理狀態」）；C5 文案是大標「已確認並回傳設計師」→小標「無需進一步操作，有變更會再通知您」→細項「整體頁面設計、CTA 視覺層級・剛剛」。
+- **術語規則：全產品不能出現「核准」這個詞，一律用「確認」**（2026-08-27 使用者明確要求）。`DecisionStatus` 的 `"approved"` 這個 enum 值可以維持英文（使用者看不到），但任何會顯示出來的中文標籤一律用「確認」。
+- **核心原則，重構時不要合併**：`flow`（導覽用，決定畫面）跟 `decision.status`（確認狀態，決定 StatusBadge 顏色文字）是兩條獨立軸線，故意不合成一個狀態機，因為同一個 `decision.status` 要被好幾個畫面共用。
+- **示範資料是 2 個決策**：整體頁面設計、CTA 視覺層級。C3 拆成 C3a／C3b，C2 整頁 mockup 上有 2 個數字標記對應這兩項。D9-D11／C6-C7 之後做的話，刻意只針對 CTA 這一項示範版本變更，不用兩項都跑一次——這個迴圈的敘事本來就是「其中一項後來被改動」。
+
+### 外部參考文件
+
+唯一可信來源，不在 repo 裡，是 Claude Artifact，開始改動畫面內容之前一定要重新讀一次，內容比這份 CLAUDE.md 新：
+
+- Wireframe（21 個畫面全灰階，正式規格尺寸 390×844 / 1440×900）：`https://claude.ai/code/artifact/1e16b7f3-23a2-4b47-af14-55380cbb024c`
+- 需求分析／架構圖／產品邊界（FR 編號 FR1-FR13）：`https://claude.ai/code/artifact/a2e803f6-04e0-4e88-812b-8355859132a1`
+- User Flow（16 個 beat 的分支流程圖，SVG 繪製，設計師端／接收端兩欄＋AI 不確定例外分支）：`https://claude.ai/code/artifact/16a6f4c1-9e36-45c7-8014-fdae293936ed`
+
+（2026-09-05 已經把兩路由／localStorage 這個架構決定回寫進這三份文件：wireframe 的 D7/D8/D8b 三張卡片改成「重新整理狀態」按鈕＋desc 說明兩邊是各自獨立系統；FR 文件的「03 架構設計圖」整節改成兩個入口＋decisionModel.ts 共用資料，「05 真實系統會怎麼分佈」的開頭段落也更新成反映 demo 已經接近真實架構；User Flow 圖把 D7→C1、C5→D8／D8b 這兩條原本畫成實線「主要動作」的箭頭改成虛線「分支／延遲」，並補充圖說跟標籤，反映「接收端自己開連結、設計師端要手動按重新整理狀態」這個沒有即時連動的實際行為。三份文件「04 產品邊界」、FR1-FR13、S1-S3 例外分支、D9-D11 迴圈內部本身沒有跟這次架構重組衝突，維持原樣沒動。）
+
+### 下一步優先順序（2026-09-05 修正）
+
+1. **D9→D10→D10b→C6→C7→D11**（模擬版本變更 → 變更偵測／已生成差異說明 → 設計師確認差異說明 → 通知客戶重新審查 → 客戶再次確認 → 設計師看到重新確認完成）。**這段需要照新架構重新設計 action，不是照抄舊 `state.ts` 裡刪掉的那些**（`SIMULATE_CHANGE`／`REDETECT`／`NOTIFY_CLIENT_REPROMPT`／`CLIENT_RECONFIRM` 等）：設計師端模擬變更、確認差異說明後，要寫回共用資料；客戶端要重新整理頁面才會看到 C6「重新審查通知」，不是靠某個 action 直接把兩邊 state 一起改掉。D8/D8b 畫面（`review_status` flow）目前是乾淨的終點，接這段時要在這裡補一個觸發「模擬變更」的入口。
+2. S1-S3（AI 不確定性彈窗，掛在 D5 底下）、視覺打磨排在最後，就算沒做完也不影響上面那步的核心論點。
+
+### 顏色系統
+
+目前 wireframe 是灰階，之後要從使用者提供的 Figma 參考截圖（`3x3GJs4NpYvHVh9qAey2GD` 檔案，node 1:13／1:220／1:405／1:621）延伸出色票，不能直接套用作品集現有的深綠 Version C 色票。
 
 ## 待辦
 
+- [ ] Sync AI 案例頁新增的 Prototype Showcase 區塊（`SyncAiCaseStudy.tsx`，內容在 `content/sync-ai.ts` 的 `prototypeShowcase`）裡有兩張「示範影片」卡片：設計師端（桌機）、客戶端（手機），都還缺影片素材，目前是虛線佔位卡片，等 Sara 分別提供兩支影片檔後接上
 - [ ] 取得 Persona 4 張人物照片，放進 `content/images/sharing-time/`，接上 `persona.cards[].photo`
 - [ ] 決定 Epilogue 殘留的 4 處要不要統一成 Inter
 - [ ] 確認 Decision 參考圖 / Service Blueprint 截圖是否為最終版本

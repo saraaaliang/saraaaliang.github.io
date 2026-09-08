@@ -452,6 +452,90 @@ export default function SyncAiCaseStudy({
         </div>
       </div>
 
+      {/* Prototype Showcase */}
+      <div className="max-w-[1080px] mx-auto px-6 md:px-10 pb-24">
+        <Kicker>{content.prototypeShowcase.kicker}</Kicker>
+        <p className="text-[15px] leading-[1.85] max-w-3xl mt-6 mb-9" style={{ color: c.body }}>
+          {content.prototypeShowcase.intro}
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-9">
+          <a
+            href={content.prototypeShowcase.userFlowUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block h-full"
+          >
+            <Card2 className="h-full transition-opacity group-hover:opacity-80">
+              <div className="text-sm font-bold mb-2.5" style={{ color: c.ink }}>
+                User Flow
+              </div>
+              <p className="text-[13px] leading-[1.7] mb-4" style={{ color: c.body }}>
+                16 個步驟的完整分支流程圖，涵蓋設計師端與客戶端兩條路徑。
+              </p>
+              <span className="inline-flex items-center gap-1 text-xs font-semibold" style={{ color: c.accent }}>
+                查看文件
+                <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </Card2>
+          </a>
+
+          <a
+            href={content.prototypeShowcase.wireframeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block h-full"
+          >
+            <Card2 className="h-full transition-opacity group-hover:opacity-80">
+              <div className="text-sm font-bold mb-2.5" style={{ color: c.ink }}>
+                Wireframe
+              </div>
+              <p className="text-[13px] leading-[1.7] mb-4" style={{ color: c.body }}>
+                21 個畫面的低保真線框稿，涵蓋設計師端與客戶端所有畫面。
+              </p>
+              <span className="inline-flex items-center gap-1 text-xs font-semibold" style={{ color: c.accent }}>
+                查看文件
+                <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+              </span>
+            </Card2>
+          </a>
+
+          {/* Video assets pending — Sara to supply the files, see CLAUDE.md 待辦 */}
+          <div
+            className="rounded-2xl p-7 flex flex-col items-center justify-center text-center"
+            style={{ border: `1.5px dashed ${c.border}` }}
+          >
+            <div className="text-sm font-bold mb-2.5" style={{ color: c.ink }}>
+              示範影片・設計師端
+            </div>
+            <p className="text-[13px] leading-[1.7]" style={{ color: c.muted }}>
+              {content.prototypeShowcase.designerVideoCaption}
+            </p>
+          </div>
+
+          <div
+            className="rounded-2xl p-7 flex flex-col items-center justify-center text-center"
+            style={{ border: `1.5px dashed ${c.border}` }}
+          >
+            <div className="text-sm font-bold mb-2.5" style={{ color: c.ink }}>
+              示範影片・客戶端
+            </div>
+            <p className="text-[13px] leading-[1.7]" style={{ color: c.muted }}>
+              {content.prototypeShowcase.clientVideoCaption}
+            </p>
+          </div>
+        </div>
+
+        <button
+          onClick={() => onNavigate("sync-ai-prototype")}
+          className="group inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-sm font-semibold hover:opacity-70 transition-opacity"
+          style={{ backgroundColor: c.accentLight, color: c.accent }}
+        >
+          {content.prototypeShowcase.ctaLabel}
+          <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+        </button>
+      </div>
+
       {/* Solution */}
       <div className="max-w-[1080px] mx-auto px-6 md:px-10 pb-24">
         <Kicker>{content.solution.kicker}</Kicker>

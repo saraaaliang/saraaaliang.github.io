@@ -750,11 +750,6 @@ export default function DesignerConsole({
                   ✓ 沒有待處理項目，可以放心進入完稿階段。
                 </p>
               )}
-              <div className="rounded-lg px-3 py-2.5 mb-3 flex items-center justify-between gap-2" style={{ backgroundColor: c.surface }}>
-                <span className="text-[11px] truncate" style={{ color: c.muted }}>
-                  figma-plugin.ai/sync/review/checkout-v2
-                </span>
-              </div>
               <button
                 onClick={() => dispatch({ type: "REFRESH_STATUS" })}
                 className="w-full inline-flex items-center justify-center gap-1.5 rounded-full px-4 py-2.5 text-[13px] font-medium transition-colors hover:bg-black/[0.03]"
