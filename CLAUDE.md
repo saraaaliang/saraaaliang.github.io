@@ -191,11 +191,10 @@ npm run optimize-images:watch  # 監看模式，丟新圖進資料夾會自動�
 
 ### 顏色系統
 
-目前 wireframe 是灰階，之後要從使用者提供的 Figma 參考截圖（`3x3GJs4NpYvHVh9qAey2GD` 檔案，node 1:13／1:220／1:405／1:621）延伸出色票，不能直接套用作品集現有的深綠 Version C 色票。
+**2026-09-09 已從綠色改成 Sync AI 真實品牌色**：互動原型（`sync-ai-prototype/ui.tsx` 的 `c` 物件）原本沿用作品集自身的深綠 Version C 色票，只是暫時的，使用者確認品牌色應該是深靛紫＋赤陶橘（從 `content/images/sync-ai/cover.png`／`cover-ub.png` 這兩張官方 landing page 截圖取樣）。目前色票：`accent: #5352c4`、`accentLight: #eeedfb`、`amber`（複用做品牌輔色）：`#b85a31`、`amberLight: #f7e9e2`。取樣時第一版直接用飽和度較高的 `#4c5fe0`＋`#d9682d`，使用者反饋「不夠有質感」，改成降飽和、加深的版本才定案，同時 `ClientReview.tsx` 的 C1 邀請頁從整塊實色背景改成淺灰底＋分隔線（避免大面積色塊），`DesignerConsole.tsx`／`ClientReview.tsx`／`ui.tsx` 的外層視窗、選中的模式卡片、審核卡片都加上柔和 `boxShadow`（呼應舊示意圖 `cover.png` 的飄浮質感）。Wireframe 灰階線框稿（`wireframe-designer-highlights.png`／`wireframe-client-highlights.png`）維持灰階不受影響，那是刻意的「色彩系統套用前」階段呈現。
 
 ## 待辦
 
-- [ ] Sync AI 案例頁新增的 Prototype Showcase 區塊（`SyncAiCaseStudy.tsx`，內容在 `content/sync-ai.ts` 的 `prototypeShowcase`）裡有兩張「示範影片」卡片：設計師端（桌機）、客戶端（手機），都還缺影片素材，目前是虛線佔位卡片，等 Sara 分別提供兩支影片檔後接上
 - [ ] 取得 Persona 4 張人物照片，放進 `content/images/sharing-time/`，接上 `persona.cards[].photo`
 - [ ] 決定 Epilogue 殘留的 4 處要不要統一成 Inter
 - [ ] 確認 Decision 參考圖 / Service Blueprint 截圖是否為最終版本

@@ -3,16 +3,18 @@ import { Check } from "lucide-react";
 import type { DecisionStatus } from "./decisionModel";
 
 // 沿用既有案例頁的 Version C 色票（見 CLAUDE.md），另外補幾個 prototype 專用的狀態色。
+// 品牌色從 Sync AI 官方 landing page（cover.png / cover-ub.png）取樣：主色深靛紫、
+// 輔色赤陶橘，取代原本沿用作品集自身的深綠 Version C 色票（2026-09-09 使用者確認）。
 export const c = {
   ink: "#15181a",
   body: "#40474a",
-  accent: "#0f3d2b",
-  accentLight: "#cdec8e",
+  accent: "#5352c4",
+  accentLight: "#eeedfb",
   muted: "#8a908d",
   surface: "#f4f5f2",
   border: "#d8dbd5",
-  amber: "#9a6b12",
-  amberLight: "#f6ecd2",
+  amber: "#b85a31",
+  amberLight: "#f7e9e2",
   blue: "#1d4ed8",
   blueLight: "#e3ebfd",
 };
@@ -166,7 +168,10 @@ export function EditConfirmBox({
   const fieldId = useId();
 
   return (
-    <div className="rounded-xl overflow-hidden" style={{ border: `1px solid ${c.border}` }}>
+    <div
+      className="rounded-xl overflow-hidden"
+      style={{ border: `1px solid ${c.border}`, boxShadow: "0 2px 10px -2px rgba(20,20,40,0.08)" }}
+    >
       <div className="p-3">
         <div className="flex items-center justify-between mb-1.5">
           <label htmlFor={fieldId} className="text-[12px] font-semibold" style={{ color: c.ink }}>

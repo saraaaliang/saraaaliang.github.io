@@ -9,12 +9,17 @@
 
 import cover from "./images/sync-ai/cover.png";
 import surveyOverview from "./images/sync-ai/survey-overview.png";
-import pluginOverview from "./images/sync-ai/plugin-overview.png";
 import problemSurveyFrustration from "./images/sync-ai/problem-survey-frustration.png";
 import userFlowDiagram from "./images/sync-ai/user-flow-diagram.png";
-import designerWireframeVisualComm from "./images/sync-ai/designer-wireframe-visual-comm.png";
-import designerWireframeSpecCheck from "./images/sync-ai/designer-wireframe-spec-check.png";
-import clientMobileSteps from "./images/sync-ai/client-mobile-5steps.png";
+import prototypeDesignerModeSelect from "./images/sync-ai/prototype-designer-mode-select.png";
+import prototypeDesignerReview from "./images/sync-ai/prototype-designer-review.png";
+import prototypeClientFlow from "./images/sync-ai/prototype-client-flow.png";
+import demoDesignerFlow from "./images/sync-ai/demo-designer-flow.gif";
+import demoClientFlow from "./images/sync-ai/demo-client-flow.gif";
+import demoDesignerPoster from "./images/sync-ai/demo-designer-poster.png";
+import demoClientPoster from "./images/sync-ai/demo-client-poster.png";
+import wireframeDesignerHighlights from "./images/sync-ai/wireframe-designer-highlights.png";
+import wireframeClientHighlights from "./images/sync-ai/wireframe-client-highlights.png";
 
 export type IconKey = "alert" | "lightbulb" | "chat" | "people" | "check" | "target" | "compass";
 
@@ -74,14 +79,26 @@ export interface SyncAiContent {
     flowImageCaption: string;
     features: Array<{ heading: string; insight: string }>;
   };
+  wireframeHighlights: {
+    kicker: string;
+    intro: string;
+    designerImage: string;
+    designerCaption: string;
+    clientImage: string;
+    clientCaption: string;
+  };
   prototypeShowcase: {
     kicker: string;
     intro: string;
-    userFlowUrl: string;
-    wireframeUrl: string;
+    designerVideo: string;
+    designerVideoPoster: string;
     designerVideoCaption: string;
+    clientVideo: string;
+    clientVideoPoster: string;
     clientVideoCaption: string;
     ctaLabel: string;
+    ctaDesignerLabel: string;
+    ctaClientLabel: string;
   };
   solution: {
     kicker: string;
@@ -100,7 +117,6 @@ export interface SyncAiContent {
     testPlanHeading: string;
     testPlanItems: string[];
     sprintTimeline: Array<{ day?: string; title: string; items: string[] }>;
-    roadmap: Array<{ heading: string; items: string[] }>;
   };
 }
 
@@ -132,7 +148,7 @@ export const syncAiContent: SyncAiContent = {
         icon: "alert",
         title: "66% 曾因誤解而重工",
         description:
-          "「改稿次數超出預期：對方理解有誤，導致產出完全不對，又要重來」——66% 的受訪設計師對此感到心累。",
+          "「改稿次數超出預期：對方理解有誤，導致產出完全不對，又要重來」，66% 的受訪設計師對此感到心累。",
       },
       {
         icon: "lightbulb",
@@ -233,64 +249,75 @@ export const syncAiContent: SyncAiContent = {
   designRationale: {
     kicker: "Design Rationale",
     intro:
-      "Sync AI 如何介入接案設計師既有的工作流：平面或插畫師可以直接進入「視覺溝通模式」，享受 AI 語境轉譯帶來的溝通便利；UI 設計師則能加開「開發交付模式」，用 AI 檢測確保 Spec 完備。「設計確認」功能的用意，是避免雙方一直在通訊軟體上來回溝通畫面的狀況。",
+      "Sync AI 的目的是加速設計師跟合作夥伴之間的溝通效率，而合作夥伴主要是兩種角色：工程師，或是客戶／PM 這類偏策略面的角色，這也是「視覺溝通模式」跟「開發交付模式」兩種模式的由來。目前 MVP 先聚焦在策略面最痛的地方：設計圖只要經過掃描，就能產出一段站得住腳的說明文字。",
     flowImage: userFlowDiagram,
     flowImageCaption:
-      "Sync AI 完整流程：設計師啟用插件 → AI 自動掃描規格與狀態 → 依交付對象選擇轉譯模式 → 客戶端確認或標註建議 → 設計師收到核准通知",
+      "Sync AI 完整產品願景流程：設計師啟用插件 → AI 自動掃描規格與狀態 → 依交付對象選擇轉譯模式 → 客戶端確認或標註建議 → 設計師收到核准通知",
     features: [
-      { heading: "功能 1・客戶轉譯", insight: "溝通誤解導致的反覆修改，往往源於缺乏共識。" },
-      { heading: "功能 2・策略補充", insight: "在缺乏回饋與決策依據的情況下，必須獨自承擔設計決策風險。" },
+      { heading: "功能 1・客戶轉譯", insight: "AI 把設計師圖檔的視覺語言，轉譯成客戶能買單的語言。" },
+      {
+        heading: "功能 2・策略補充",
+        insight: "設計師能在 AI 生成的說明上，再補上商業／策略層面的理由，讓客戶不只看到畫面說明，也了解「為什麼」。",
+      },
       {
         heading: "功能 3・規格檢測",
-        insight: "接案設計師如何更專業、有策略地從「執行設計」轉向「設計整個合作方式」。",
+        insight: "開發交付模式下，AI 自動掃描規格缺漏（斷點、Token 未定案），在交付給工程師前先補齊。",
       },
     ],
+  },
+
+  wireframeHighlights: {
+    kicker: "Wireframe",
+    intro:
+      "精選幾張 Wireframe 畫面：接收端完整走過邀請、確認、留言、重新確認的閉環，這是 Sync AI 真正要驗證的差異化價值；設計師端只挑幾張代表 AI 介入的思考邏輯，這部分相對容易被市場上其他 AI 工具取代。",
+    designerImage: wireframeDesignerHighlights,
+    designerCaption: "設計師端：掃描、偵測候選重點、審核微調、確認送出。",
+    clientImage: wireframeClientHighlights,
+    clientCaption: "接收端：邀請、總覽、決策細節、留言、確認完成、重新審查、再次確認，完整閉環。",
   },
 
   prototypeShowcase: {
     kicker: "Prototype",
-    intro:
-      "5 天衝刺結束後，User Flow 與 Wireframe 都持續更新到更精確的版本，也做出了一版可以實際操作的互動原型。",
-    userFlowUrl: "https://claude.ai/code/artifact/16a6f4c1-9e36-45c7-8014-fdae293936ed",
-    wireframeUrl: "https://claude.ai/code/artifact/1e16b7f3-23a2-4b47-af14-55380cbb024c",
-    designerVideoCaption: "設計師端（桌機）操作示範，影片素材製作中。",
-    clientVideoCaption: "客戶端（手機）審查示範，影片素材製作中。",
-    ctaLabel: "直接體驗完整原型",
+    intro: "5 天衝刺結束後，也做出了一版可以實際操作的互動原型，設計師端與接收端各自獨立。",
+    designerVideo: demoDesignerFlow,
+    designerVideoPoster: demoDesignerPoster,
+    designerVideoCaption: "設計師端（桌機）關鍵畫面示範：交付設定 → 偵測結果 → 確認生成清單 → 審核與微調 → 分享審查連結",
+    clientVideo: demoClientFlow,
+    clientVideoPoster: demoClientPoster,
+    clientVideoCaption: "客戶端（手機）關鍵畫面示範：邀請頁 → 變更總覽 → 決策細節 → 確認完成",
+    ctaLabel: "體驗可互動原型",
+    ctaDesignerLabel: "設計師端",
+    ctaClientLabel: "客戶端",
   },
 
   solution: {
     kicker: "Solution",
-    before: "設計師端的核心功能是「視覺溝通模式」，涵蓋",
-    bold: "設計理念、行銷、UX 策略的轉譯",
-    after:
-      "；次要功能則是「開發交付模式」下的規格檢測，提供簡單的技術備註生成——但重點不在數據（Px/Hex），而在「技術決策的解釋」。",
+    before: "以下是 MVP 主要聚焦的「視覺溝通模式」實際畫面，核心是",
+    bold: "把設計理念、行銷、UX 策略轉譯成客戶聽得懂的說明",
+    after: "，兩種模式的完整差異見下方對照表。",
     modeCompareHeading: "兩種模式功能對照",
     modeCompare: [
       {
         heading: "視覺溝通模式",
-        items: ["無掃描按鈕", "無 Spec 診斷區", "客戶 + PM Tab（共 2 個）", "適合廣告 / 文宣 / 品牌"],
+        items: ["無掃描按鈕", "無 Spec 診斷區", "涵蓋功能 1、2（客戶轉譯、策略補充）", "適合廣告 / 文宣 / 品牌"],
       },
       {
         heading: "開發交付模式",
-        items: ["掃描並檢測按鈕", "Spec 診斷結果區", "客戶 + PM + 工程師 Tab（共 3 個）", "適合 UI / Web 產品"],
+        items: ["掃描並檢測按鈕", "Spec 診斷結果區", "涵蓋功能 3（規格檢測）", "適合 UI / Web 產品"],
       },
     ],
     screens: [
       {
-        image: pluginOverview,
-        caption: "插件總覽：啟用後先選擇工作模式，決定工作流程與可用功能",
+        image: prototypeDesignerModeSelect,
+        caption: "插件總覽：啟用後先選擇工作模式，決定工作流程與可用功能（互動原型實際畫面）",
       },
       {
-        image: designerWireframeVisualComm,
-        caption: "設計師端：視覺溝通模式，AI 依圖層屬性自動產出客戶語言與策略說明",
+        image: prototypeDesignerReview,
+        caption: "設計師端：視覺溝通模式，AI 依圖層屬性自動產出客戶語言與策略說明，逐項審核與微調（互動原型實際畫面）",
       },
       {
-        image: designerWireframeSpecCheck,
-        caption: "設計師端：開發交付模式，AI 掃描規格缺漏並提供自動補齊建議",
-      },
-      {
-        image: clientMobileSteps,
-        caption: "客戶端手機審查流程：接收連結 → 設計概覽 → 詳細審查 → 標註建議 → 確認定稿",
+        image: prototypeClientFlow,
+        caption: "客戶端手機審查流程：接收連結 → 設計概覽 → 詳細審查 → 確認定稿（互動原型實際畫面）",
       },
     ],
   },
@@ -298,14 +325,14 @@ export const syncAiContent: SyncAiContent = {
   openQuestion: {
     kicker: "Open Question",
     intro:
-      "Sync AI專案仍在產品開發與測試階段。5 天衝刺已完成前期痛點研究、需求定義與 Wireframe，下一步將驗證產品範圍（Product Scope）的取捨：",
+      "Sync AI 專案仍在產品開發與測試階段。5 天衝刺已完成前期痛點研究、需求定義與 Wireframe，下一步將驗證產品範圍（Product Scope）的取捨：",
     forkBold: "核心問題：是否保留「客戶端確認閉環」，還是把範圍收斂成只做「AI 生成解釋」？",
     forkAfter:
       "此決定會直接影響 Sync AI 在通用 AI 工具（如 Figma MCP + Claude Code）逐漸普及之後，是否還有開發必要。如果只做解釋產出，價值主張會更接近可被取代的「文字生成」；如果保留確認閉環，才真正解決研究裡驗證出的「反覆修改」問題。",
-    testPlanHeading: "驗證方法：MVP開發測試",
+    testPlanHeading: "驗證方法：MVP 開發測試",
     testPlanItems: [
-      "A版：AI Explanation — 設計師將 AI 生成的設計說明分享至既有 LINE／Slack 流程，驗證「僅提供 AI 解釋設計稿」的價值。",
-      "B版：AI Explanation + Confirmation Loop — 建立「分享連結 → 客戶逐項確認 → 即時通知設計師」的完整確認流程，驗證閉環機制是否能降低溝通成本。",
+      "A 版（AI Explanation）：設計師將 AI 生成的設計說明分享至既有 LINE／Slack 流程，驗證「僅提供 AI 解釋設計稿」的價值。",
+      "B 版（AI Explanation + Confirmation Loop）：建立「分享連結 → 客戶逐項確認 → 即時通知設計師」的完整確認流程，驗證閉環機制是否能降低溝通成本。",
       "再追蹤 A、B 兩版的改稿次數與來回溝通次數，用數據決定產品範圍。",
     ],
     sprintTimeline: [
@@ -335,6 +362,7 @@ export const syncAiContent: SyncAiContent = {
         items: ["繪製低保真 Wireframe", "設計關鍵流程與頁面"],
       },
       {
+        day: "已完成",
         title: "原型開發",
         items: ["A 版：僅 AI 解釋", "B 版：含確認閉環", "建立可操作的薄型 Prototype"],
       },
@@ -349,20 +377,6 @@ export const syncAiContent: SyncAiContent = {
       {
         title: "決策與下一步",
         items: ["分析 A/B 結果", "決定產品範圍", "規劃開發路線圖"],
-      },
-    ],
-    roadmap: [
-      {
-        heading: "易用性",
-        items: ["前期測試：驗證 AI 生成的精確度，確保數據符合邏輯", "極端場景測試：進行不同情境下的壓力測試"],
-      },
-      {
-        heading: "技術可行性 & 資安",
-        items: ["效能評估：評估 AI 掃描大型 Figma 檔案的延遲問題", "資安議題：確保 AI 處理過程符合隱私規範，建立用戶信任"],
-      },
-      {
-        heading: "數據追蹤優化功能",
-        items: ["追蹤客戶開啟連結後的停留點與瀏覽路徑", "透過量化數據確定用戶痛點，轉化為 UX 優化方式"],
       },
     ],
   },

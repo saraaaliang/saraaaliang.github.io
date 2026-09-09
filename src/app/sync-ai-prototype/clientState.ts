@@ -59,10 +59,18 @@ export function clientReducer(state: ClientState, action: ClientAction): ClientS
           : d
       );
       saveSharedDecisions(decisions);
-      // 跟 D6 一樣，確認不會自動前進到下一項——導覽完全交給 ‹ › 自由切換；
-      // 全部項目都確認過才自動進 C5，不管是從第幾項確認完成的。
-      const allConfirmed = selectedDecisions(decisions).every((d) => d.status === "confirmed");
-      return { ...state, decisions, flow: allConfirmed ? "client_confirmed" : state.flow };
+      // 跟 D6 一樣，確認後會自動前進到下一項（不是最後一項時）；‹ › 還是能自由
+      // 切換回去看已確認過的項目。全部項目都確認過才自動進 C5，不管是從第幾項
+      // 確認完成的。
+      const selectedAfter = selectedDecisions(decisions);
+      const allConfirmed = selectedAfter.every((d) => d.status === "confirmed");
+      const isLast = state.clientCursor >= selectedAfter.length - 1;
+      return {
+        ...state,
+        decisions,
+        clientCursor: isLast ? state.clientCursor : state.clientCursor + 1,
+        flow: allConfirmed ? "client_confirmed" : state.flow,
+      };
     }
 
     case "CLIENT_OPEN_COMMENT":

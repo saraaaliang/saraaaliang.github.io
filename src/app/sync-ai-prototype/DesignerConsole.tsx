@@ -84,7 +84,11 @@ function ModeCard({
   return (
     <div
       className="rounded-xl p-3.5"
-      style={{ border: `1px solid ${disabled ? c.border : c.accent}`, opacity: disabled ? 0.45 : 1 }}
+      style={{
+        border: `1px solid ${disabled ? c.border : c.accent}`,
+        opacity: disabled ? 0.45 : 1,
+        boxShadow: disabled ? "none" : "0 4px 16px -4px rgba(83,82,196,0.18)",
+      }}
     >
       <div className="text-[13px] font-bold mb-1" style={{ color: c.ink }}>
         {title}
@@ -293,7 +297,11 @@ export default function DesignerConsole({
   return (
     <div
       className="relative rounded-2xl overflow-hidden mx-auto max-w-[820px]"
-      style={{ border: `1px solid ${c.border}`, backgroundColor: "#fff" }}
+      style={{
+        border: `1px solid ${c.border}`,
+        backgroundColor: "#fff",
+        boxShadow: "0 20px 60px -12px rgba(20,20,40,0.18), 0 8px 24px -8px rgba(20,20,40,0.12)",
+      }}
     >
       {flow === "link_ready" && previewOpen && (
         <PreviewSheet decisions={selected} onClose={() => setPreviewOpen(false)} />

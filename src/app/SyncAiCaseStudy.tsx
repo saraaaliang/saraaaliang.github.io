@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "motion/react";
 import {
   ArrowLeft,
@@ -9,6 +10,7 @@ import {
   AlertCircle,
   Lightbulb,
   Compass,
+  Play,
 } from "lucide-react";
 import type { IconKey, SyncAiContent } from "../content/sync-ai";
 import type { Project } from "./App";
@@ -60,6 +62,36 @@ function Kicker({ children, onDark }: { children: React.ReactNode; onDark?: bool
     >
       {children}
     </div>
+  );
+}
+
+// Click-to-play GIF demo: starts on a static poster frame so two of these side by
+// side (or stacked) don't both auto-loop and compete for attention; clicking swaps
+// in the animated GIF, which then loops on its own until the visitor scrolls away.
+function PlayableDemo({ poster, gif, alt }: { poster: string; gif: string; alt: string }) {
+  const [playing, setPlaying] = useState(false);
+  return (
+    <button
+      type="button"
+      onClick={() => setPlaying(true)}
+      disabled={playing}
+      className="group relative w-full block rounded-2xl overflow-hidden"
+      style={{ backgroundColor: c.surface, cursor: playing ? "default" : "pointer" }}
+    >
+      <img src={playing ? gif : poster} alt={alt} className="w-full h-auto object-contain" />
+      {!playing && (
+        <div
+          className="absolute inset-0 flex items-center justify-center transition-colors group-hover:bg-black/[0.06]"
+        >
+          <span
+            className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-transform group-hover:scale-105"
+            style={{ backgroundColor: "#fff" }}
+          >
+            <Play size={20} color={c.accent} fill={c.accent} className="ml-0.5" />
+          </span>
+        </div>
+      )}
+    </button>
   );
 }
 
@@ -392,7 +424,7 @@ export default function SyncAiCaseStudy({
 
         {/* User Journey */}
         <div>
-          <div className="text-sm font-bold mb-3" style={{ color: c.ink }}>
+          <div className="text-[13px] font-semibold mb-3" style={{ color: c.muted }}>
             {content.discovery.journey.heading}
           </div>
           <p className="text-sm leading-[1.8] max-w-2xl mb-7" style={{ color: c.body }}>
@@ -452,90 +484,6 @@ export default function SyncAiCaseStudy({
         </div>
       </div>
 
-      {/* Prototype Showcase */}
-      <div className="max-w-[1080px] mx-auto px-6 md:px-10 pb-24">
-        <Kicker>{content.prototypeShowcase.kicker}</Kicker>
-        <p className="text-[15px] leading-[1.85] max-w-3xl mt-6 mb-9" style={{ color: c.body }}>
-          {content.prototypeShowcase.intro}
-        </p>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-9">
-          <a
-            href={content.prototypeShowcase.userFlowUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block h-full"
-          >
-            <Card2 className="h-full transition-opacity group-hover:opacity-80">
-              <div className="text-sm font-bold mb-2.5" style={{ color: c.ink }}>
-                User Flow
-              </div>
-              <p className="text-[13px] leading-[1.7] mb-4" style={{ color: c.body }}>
-                16 個步驟的完整分支流程圖，涵蓋設計師端與客戶端兩條路徑。
-              </p>
-              <span className="inline-flex items-center gap-1 text-xs font-semibold" style={{ color: c.accent }}>
-                查看文件
-                <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
-              </span>
-            </Card2>
-          </a>
-
-          <a
-            href={content.prototypeShowcase.wireframeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block h-full"
-          >
-            <Card2 className="h-full transition-opacity group-hover:opacity-80">
-              <div className="text-sm font-bold mb-2.5" style={{ color: c.ink }}>
-                Wireframe
-              </div>
-              <p className="text-[13px] leading-[1.7] mb-4" style={{ color: c.body }}>
-                21 個畫面的低保真線框稿，涵蓋設計師端與客戶端所有畫面。
-              </p>
-              <span className="inline-flex items-center gap-1 text-xs font-semibold" style={{ color: c.accent }}>
-                查看文件
-                <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
-              </span>
-            </Card2>
-          </a>
-
-          {/* Video assets pending — Sara to supply the files, see CLAUDE.md 待辦 */}
-          <div
-            className="rounded-2xl p-7 flex flex-col items-center justify-center text-center"
-            style={{ border: `1.5px dashed ${c.border}` }}
-          >
-            <div className="text-sm font-bold mb-2.5" style={{ color: c.ink }}>
-              示範影片・設計師端
-            </div>
-            <p className="text-[13px] leading-[1.7]" style={{ color: c.muted }}>
-              {content.prototypeShowcase.designerVideoCaption}
-            </p>
-          </div>
-
-          <div
-            className="rounded-2xl p-7 flex flex-col items-center justify-center text-center"
-            style={{ border: `1.5px dashed ${c.border}` }}
-          >
-            <div className="text-sm font-bold mb-2.5" style={{ color: c.ink }}>
-              示範影片・客戶端
-            </div>
-            <p className="text-[13px] leading-[1.7]" style={{ color: c.muted }}>
-              {content.prototypeShowcase.clientVideoCaption}
-            </p>
-          </div>
-        </div>
-
-        <button
-          onClick={() => onNavigate("sync-ai-prototype")}
-          className="group inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-sm font-semibold hover:opacity-70 transition-opacity"
-          style={{ backgroundColor: c.accentLight, color: c.accent }}
-        >
-          {content.prototypeShowcase.ctaLabel}
-          <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
-        </button>
-      </div>
-
       {/* Solution */}
       <div className="max-w-[1080px] mx-auto px-6 md:px-10 pb-24">
         <Kicker>{content.solution.kicker}</Kicker>
@@ -581,6 +529,98 @@ export default function SyncAiCaseStudy({
         </div>
       </div>
 
+      {/* Wireframe Highlights */}
+      <div className="max-w-[1080px] mx-auto px-6 md:px-10 pb-24">
+        <Kicker>{content.wireframeHighlights.kicker}</Kicker>
+        <p className="text-[15px] leading-[1.85] max-w-3xl mt-6 mb-9" style={{ color: c.body }}>
+          {content.wireframeHighlights.intro}
+        </p>
+
+        <div className="space-y-10">
+          <div>
+            <div className="rounded-[20px] overflow-hidden" style={{ border: `1px solid ${c.border}` }}>
+              <img
+                src={content.wireframeHighlights.clientImage}
+                alt={content.wireframeHighlights.clientCaption}
+                className="w-full h-auto object-contain"
+              />
+            </div>
+            <figcaption className="mt-2.5 text-xs" style={{ color: c.muted }}>
+              {content.wireframeHighlights.clientCaption}
+            </figcaption>
+          </div>
+
+          <div>
+            <div className="rounded-[20px] overflow-hidden" style={{ border: `1px solid ${c.border}` }}>
+              <img
+                src={content.wireframeHighlights.designerImage}
+                alt={content.wireframeHighlights.designerCaption}
+                className="w-full h-auto object-contain"
+              />
+            </div>
+            <figcaption className="mt-2.5 text-xs" style={{ color: c.muted }}>
+              {content.wireframeHighlights.designerCaption}
+            </figcaption>
+          </div>
+        </div>
+      </div>
+
+      {/* Prototype */}
+      <div className="max-w-[1080px] mx-auto px-6 md:px-10 pb-24">
+        <Kicker>{content.prototypeShowcase.kicker}</Kicker>
+        <p className="text-[15px] leading-[1.85] max-w-3xl mt-6 mb-9" style={{ color: c.body }}>
+          {content.prototypeShowcase.intro}
+        </p>
+
+        <div className="space-y-10 mb-9">
+          <div>
+            <PlayableDemo
+              poster={content.prototypeShowcase.designerVideoPoster}
+              gif={content.prototypeShowcase.designerVideo}
+              alt={content.prototypeShowcase.designerVideoCaption}
+            />
+            <figcaption className="mt-2.5 text-xs" style={{ color: c.muted }}>
+              {content.prototypeShowcase.designerVideoCaption}
+            </figcaption>
+          </div>
+
+          <div>
+            <div className="max-w-[320px] mx-auto">
+              <PlayableDemo
+                poster={content.prototypeShowcase.clientVideoPoster}
+                gif={content.prototypeShowcase.clientVideo}
+                alt={content.prototypeShowcase.clientVideoCaption}
+              />
+            </div>
+            <figcaption className="mt-2.5 text-xs text-center" style={{ color: c.muted }}>
+              {content.prototypeShowcase.clientVideoCaption}
+            </figcaption>
+          </div>
+        </div>
+
+        <div className="text-[13px] font-semibold mb-3" style={{ color: c.muted }}>
+          {content.prototypeShowcase.ctaLabel}
+        </div>
+        <div className="flex flex-wrap gap-3">
+          <button
+            onClick={() => onNavigate("sync-ai-prototype")}
+            className="group inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-sm font-semibold hover:opacity-70 transition-opacity"
+            style={{ backgroundColor: c.accentLight, color: c.accent }}
+          >
+            {content.prototypeShowcase.ctaDesignerLabel}
+            <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+          </button>
+          <button
+            onClick={() => onNavigate("sync-ai-review")}
+            className="group inline-flex items-center gap-1.5 rounded-full px-6 py-3 text-sm font-semibold hover:opacity-70 transition-opacity"
+            style={{ backgroundColor: c.accentLight, color: c.accent }}
+          >
+            {content.prototypeShowcase.ctaClientLabel}
+            <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+          </button>
+        </div>
+      </div>
+
       {/* Open Question — dark band, replaces the usual "Outcome" slot: this project hasn't shipped yet */}
       <div style={{ backgroundColor: c.darkBg, padding: "96px 0" }}>
         <div className="max-w-[1080px] mx-auto px-6 md:px-10" style={{ color: c.darkInk }}>
@@ -609,26 +649,6 @@ export default function SyncAiCaseStudy({
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className="text-xs font-semibold uppercase tracking-[0.08em] mb-6" style={{ color: c.darkCaption }}>
-            Next Steps — 從 MVP 到產品落地
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {content.openQuestion.roadmap.map((r, i) => (
-              <div key={i} className="rounded-2xl p-6" style={{ border: `1px solid ${c.darkCaption}40` }}>
-                <div className="text-sm font-bold mb-3" style={{ color: c.darkInk }}>
-                  {r.heading}
-                </div>
-                <ul className="space-y-1.5 list-disc list-outside pl-4">
-                  {r.items.map((item, ii) => (
-                    <li key={ii} className="text-xs leading-[1.6] text-pretty" style={{ color: c.darkBody }}>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
           </div>
         </div>
       </div>

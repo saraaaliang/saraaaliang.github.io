@@ -200,7 +200,12 @@ export default function ClientReview({
     <div className="mx-auto" style={{ width: 300 }}>
       <div
         className="rounded-[32px] overflow-hidden flex flex-col"
-        style={{ border: `8px solid ${c.ink}`, backgroundColor: "#fff", height: 620 }}
+        style={{
+          border: `8px solid ${c.ink}`,
+          backgroundColor: "#fff",
+          height: 620,
+          boxShadow: "0 20px 60px -12px rgba(20,20,40,0.22), 0 8px 24px -8px rgba(20,20,40,0.14)",
+        }}
       >
         <StatusBar />
 
@@ -213,12 +218,12 @@ export default function ClientReview({
                 Sync AI
               </span>
             </div>
-            <div className="px-5 pt-8 pb-6" style={{ backgroundColor: c.accent }}>
+            <div className="px-5 pt-8 pb-6" style={{ backgroundColor: c.surface, borderBottom: `1px solid ${c.border}` }}>
               <div className="w-11 h-11 rounded-full mb-4" style={{ backgroundColor: c.accentLight }} />
-              <div className="text-[11px] mb-1" style={{ color: "#9db097" }}>
+              <div className="text-[11px] mb-1" style={{ color: c.muted }}>
                 Alex 邀請你審查
               </div>
-              <div className="text-[19px] font-bold leading-tight" style={{ color: "#fff" }}>
+              <div className="text-[19px] font-bold leading-tight" style={{ color: c.ink }}>
                 Checkout Design
               </div>
             </div>
