@@ -133,7 +133,7 @@ export const syncAiContent: SyncAiContent = {
     tags: ["使用者研究", "問卷數據洞察", "0-1 功能發想", "AI 產品設計"],
     description:
       "Sync AI 是一款 Figma 插件構想：協助設計師把視覺決策轉譯成客戶聽得懂的語言，改善因為與客戶缺乏共同理解，反覆面對超出預期的修改要求。並提供完整的線上確認流程，取代在通訊軟體上來回拉扯的溝通方式。",
-    role: "AI 產品設計師",
+    role: "UI/UX 設計師",
     focus: "0-1 產品定義 · 使用者研究 · AI 功能設計",
     coverImage: cover,
     coverAlt: "Sync AI Figma 插件介面示意，顯示語意轉譯與規格檢測功能",
