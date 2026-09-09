@@ -1,4 +1,4 @@
-// ── Sync AI：語意轉譯工具設計 — Case Study Content ──────────────────────────
+// ── Sync AI：設計溝通轉譯工具 — Case Study Content ──────────────────────────
 // All copy and image references for the Sync AI case study live here.
 // Edit text or swap image files below — no need to touch the layout component
 // (src/app/SyncAiCaseStudy.tsx) to change content.
@@ -123,17 +123,17 @@ export interface SyncAiContent {
 export const syncAiContent: SyncAiContent = {
   meta: {
     id: "sync-ai",
-    titleZh: "AI Product Design · Sync AI 語意轉譯工具設計",
+    titleZh: "AI Product Design · Sync AI 設計溝通轉譯工具",
     year: "2026",
   },
 
   hero: {
     kicker: "Case Study",
-    title: "Sync AI：語意轉譯工具設計",
+    title: "Sync AI：設計溝通轉譯工具",
     tags: ["使用者研究", "問卷數據洞察", "0-1 功能發想", "AI 產品設計"],
     description:
-      "接案設計師常在交付設計時，因為與客戶缺乏共同理解，反覆面對超出預期的修改要求。Sync AI 是一款 Figma 插件構想：協助設計師把視覺決策轉譯成客戶聽得懂的語言，並提供完整的線上確認流程，取代在通訊軟體上來回拉扯的溝通方式。",
-    role: "Lead UX 設計師",
+      "Sync AI 是一款 Figma 插件構想：協助設計師把視覺決策轉譯成客戶聽得懂的語言，改善因為與客戶缺乏共同理解，反覆面對超出預期的修改要求。並提供完整的線上確認流程，取代在通訊軟體上來回拉扯的溝通方式。",
+    role: "AI 產品設計師",
     focus: "0-1 產品定義 · 使用者研究 · AI 功能設計",
     coverImage: cover,
     coverAlt: "Sync AI Figma 插件介面示意，顯示語意轉譯與規格檢測功能",
