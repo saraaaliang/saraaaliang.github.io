@@ -36,6 +36,18 @@ export interface Project {
 
 const PROJECTS: Project[] = [
   {
+    id: syncAiContent.meta.id,
+    title: syncAiContent.hero.title,
+    titleZh: syncAiContent.meta.titleZh,
+    category: "AI 產品設計",
+    year: syncAiContent.meta.year,
+    role: syncAiContent.hero.role,
+    valueProposition: syncAiContent.hero.description,
+    coverImage: syncAiContent.hero.coverImage,
+    tags: ["使用者研究", "0-1 功能發想", "AI 產品設計"],
+    summary: syncAiContent.hero.description,
+  },
+  {
     id: sharingTimeContent.meta.id,
     title: sharingTimeContent.hero.title,
     titleZh: sharingTimeContent.meta.titleZh,
@@ -58,18 +70,6 @@ const PROJECTS: Project[] = [
     coverImage: communityOfCareContent.hero.coverImage,
     tags: ["政策探索", "使用者研究", "服務設計", "概念驗證"],
     summary: communityOfCareContent.hero.description,
-  },
-  {
-    id: syncAiContent.meta.id,
-    title: syncAiContent.hero.title,
-    titleZh: syncAiContent.meta.titleZh,
-    category: "AI 產品設計",
-    year: syncAiContent.meta.year,
-    role: syncAiContent.hero.role,
-    valueProposition: syncAiContent.hero.description,
-    coverImage: syncAiContent.hero.coverImage,
-    tags: ["使用者研究", "0-1 功能發想", "AI 產品設計"],
-    summary: syncAiContent.hero.description,
   },
   {
     id: sdgEnergyContent.meta.id,
