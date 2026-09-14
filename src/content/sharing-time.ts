@@ -19,6 +19,10 @@ import mobile2 from "./images/sharing-time/mobile-2.mp4";
 import mobile3 from "./images/sharing-time/mobile-3.mp4";
 import mobile4 from "./images/sharing-time/mobile-4.mp4";
 import reflectionPhoto from "./images/sharing-time/reflection.png";
+import personaManager from "./images/sharing-time/persona-manager.png";
+import personaSeniorDesigner from "./images/sharing-time/persona-senior-designer.png";
+import personaJuniorDesigner from "./images/sharing-time/persona-junior-designer.png";
+import personaNewDesigner from "./images/sharing-time/persona-new-designer.png";
 
 export type IconKey =
   | "check"
@@ -140,7 +144,7 @@ export const sharingTimeContent: SharingTimeContent = {
     kicker: "Case Study",
     title: "企業服務：內部分享服務設計",
     description:
-      "以用戶及組織真實反饋設計，促進團隊效率、溝通模式與工作滿意度。成功被合作企業採納，獲參與者全員正向評價。",
+      "以用戶及組織真實回饋，設計一項促進團隊效率、溝通模式與工作滿意度的分享服務，成功被合作企業採納，獲參與者全員正向評價。我主導從研究、假設驗證到解法設計的完整流程，並在 2026 年將實體工具重新設計為線上協作平台。",
     role: "服務設計師 · UIUX設計師",
     focus: "從研究至功能產生 · 使用者研究 · 服務設計 · AI工具建立",
     coverImage: cover,
@@ -238,6 +242,7 @@ export const sharingTimeContent: SharingTimeContent = {
         "合作對象為倫敦與台北兩地 10 多位創意產業工作者，包括企業主、主管與員工，以及 1 間設計公司；研究發現受影響最深的族群，是孤立感特別明顯的新進與資淺設計師。",
       cards: [
         {
+          photo: personaManager,
           emoji: "🧑‍💼",
           tag: "服務推動者",
           tagStyle: "primary",
@@ -249,6 +254,7 @@ export const sharingTimeContent: SharingTimeContent = {
           opportunities: ["願意了解員工遇到的困難並協助解方。", "遇到困難時，主管願意提供協助。"],
         },
         {
+          photo: personaSeniorDesigner,
           emoji: "🧑‍🎨",
           tag: "主要使用者",
           tagStyle: "secondary",
@@ -260,6 +266,7 @@ export const sharingTimeContent: SharingTimeContent = {
           opportunities: ["樂於與同事、主管討論工作需求。", "願意憑藉豐富經驗協助其他設計師解決問題。"],
         },
         {
+          photo: personaJuniorDesigner,
           emoji: "🧑‍💻",
           tag: "主要使用者",
           tagStyle: "secondary",
@@ -279,6 +286,7 @@ export const sharingTimeContent: SharingTimeContent = {
           opportunities: ["彈性的公司政策能降低壓力。", "若有機會，願意與同事分享自己的處境。"],
         },
         {
+          photo: personaNewDesigner,
           emoji: "🙋",
           tag: "極端使用者",
           tagStyle: "dark",
@@ -359,7 +367,7 @@ export const sharingTimeContent: SharingTimeContent = {
   reflection: {
     kicker: "Reflection",
     paragraph:
-      "我從使用者需求出發，定義功能、拆解競品、說服企業，並交付可驗證的模型。可執行的方向不僅是流程設計，而是更全面分析使用者、企業與市場需求，藉此提升使用者體驗與品牌價值。",
+      "公開展覽時，有設計師特別分享他很有共鳴，因為團隊裡缺乏溝通、感到孤立的痛點，正是他自己的處境。但後期驗證訪談中，一位英國設計公司總監提出不同觀點：對他們團隊來說這個痛點並不成立，因為成員大多會主動分享想法。這讓我意識到，這類痛點不是普遍存在，而是特定團隊組成與文化下才會出現的議題。同時我也發現，重視團隊成長的經營者真正在意的是「服務如何長期運營」與「怎麼讓參與者持續參與」，這是功能與概念驗證通過後，下一階段才會浮現的挑戰。這也讓我看待每個專案時，會同時考量營運的穩定性與長期發展，也促使我近期利用 AI 工具，把原本的線上線下工具整合成更輕量的線上版本，正在工作坊與分享會中測試。",
     image: reflectionPhoto,
     imageCaption: "工作坊反思紀錄照片",
   },

@@ -85,12 +85,21 @@ type Palette = typeof c;
 function PersonaHeader({ card, c }: { card: PersonaCard; c: Palette }) {
   return (
     <div className="flex items-center gap-3 mb-3">
-      <div
-        className="w-[52px] h-[52px] rounded-full flex-shrink-0 flex items-center justify-center text-2xl"
-        style={{ backgroundColor: c.accentLight }}
-      >
-        <span role="img" aria-label={card.name}>{card.emoji}</span>
-      </div>
+      {card.photo ? (
+        <img
+          src={card.photo}
+          alt={card.name}
+          className="w-[52px] h-[52px] rounded-full flex-shrink-0 object-cover"
+          style={{ objectPosition: card.imgPos ?? "center" }}
+        />
+      ) : (
+        <div
+          className="w-[52px] h-[52px] rounded-full flex-shrink-0 flex items-center justify-center text-2xl"
+          style={{ backgroundColor: c.accentLight }}
+        >
+          <span role="img" aria-label={card.name}>{card.emoji}</span>
+        </div>
+      )}
       <div>
         <div className="text-[15px] font-bold" style={{ color: c.ink }}>{card.name}</div>
         <span

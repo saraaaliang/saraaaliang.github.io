@@ -251,14 +251,14 @@ function HeroSection({
             className="text-sm font-semibold tracking-wide"
             style={{ color: "#0f3d2b" }}
           >
-            AI-First 使用者體驗 / 服務設計師
+            服務設計師 / 使用者體驗設計師
           </div>
 
           <h1
             className="text-[clamp(2rem,5vw,3.5rem)] font-semibold text-foreground leading-[1.2] tracking-tight"
             style={{ fontFamily: "var(--font-epilogue)" }}
           >
-            善於將複雜議題轉化為清楚易懂的數位體驗。
+            整合研究、工程與商業觀點，把模糊的問題轉譯成能落地的產品與服務體驗。
           </h1>
 
           <div
@@ -271,13 +271,6 @@ function HeroSection({
             <span style={{ color: "#d8dbd5" }}>｜</span>
             <span>英國政府大樓公開展出</span>
           </div>
-
-          <p
-            className="text-base md:text-lg leading-relaxed max-w-xl"
-            style={{ color: "#40474a" }}
-          >
-            我是一位使用者體驗/服務設計師，擅長把抽象的服務流程與使用者需求，轉化為兼具設計一致性與可落地性的數位體驗。
-          </p>
 
           <div className="flex flex-wrap items-center gap-3 pt-2">
             <button
