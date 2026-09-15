@@ -175,6 +175,14 @@ function Nav({
               {label}
             </button>
           ))}
+          <a
+            href="/resume/Sara_Liang_UX_Designer.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Resume
+          </a>
         </div>
 
         <button
@@ -209,6 +217,14 @@ function Nav({
                   {label}
                 </button>
               ))}
+              <a
+                href="/resume/Sara_Liang_UX_Designer.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-left py-3 text-foreground text-sm"
+              >
+                Resume
+              </a>
             </div>
           </motion.div>
         )}
